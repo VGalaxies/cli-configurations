@@ -34,7 +34,7 @@ function IOTCLI {
         [int]$p
     )
     
-    $path = "C:\Documents\codebase\iotdb\distribution\target\apache-iotdb-1.3.2-SNAPSHOT-all-bin\apache-iotdb-1.3.2-SNAPSHOT-all-bin"
+    $path = "C:\Documents\codebase\iotdb\distribution\target\apache-iotdb-1.3.3-SNAPSHOT-all-bin\apache-iotdb-1.3.3-SNAPSHOT-all-bin"
     Set-Location -Path $path
     
     $startCliScript = ".\sbin\start-cli.bat"
@@ -66,6 +66,11 @@ function IOTCL {
         [string]$dir
     )
 
+    # Check if the directory exists
+    if (-Not (Test-Path -Path $dir)) {
+        return
+    }
+
     Set-Location -Path $dir
 
     $foldersToDelete = @("data", "logs", "target")
@@ -80,19 +85,19 @@ function IOTCL {
 }
 
 function CL {
-    IOTCL -dir 'C:\Documents\codebase\iotdb\distribution\target\apache-iotdb-1.3.2-SNAPSHOT-all-bin\apache-iotdb-1.3.2-SNAPSHOT-all-bin' ;
+    IOTCL -dir 'C:\Documents\codebase\iotdb\distribution\target\apache-iotdb-1.3.3-SNAPSHOT-all-bin\apache-iotdb-1.3.3-SNAPSHOT-all-bin' ;
 }
 
 function CLAB {
-    IOTCL -dir 'C:\Documents\codebase\iotdb\distribution\target\apache-iotdb-1.3.2-SNAPSHOT-all-bin\A' ;
-    IOTCL -dir 'C:\Documents\codebase\iotdb\distribution\target\apache-iotdb-1.3.2-SNAPSHOT-all-bin\B'
+    IOTCL -dir 'C:\Documents\codebase\iotdb\distribution\target\apache-iotdb-1.3.3-SNAPSHOT-all-bin\A' ;
+    IOTCL -dir 'C:\Documents\codebase\iotdb\distribution\target\apache-iotdb-1.3.3-SNAPSHOT-all-bin\B'
 }
 
 function CL1C3D {
-    IOTCL -dir 'C:\Documents\codebase\iotdb\distribution\target\apache-iotdb-1.3.2-SNAPSHOT-all-bin\C1' ;
-    IOTCL -dir 'C:\Documents\codebase\iotdb\distribution\target\apache-iotdb-1.3.2-SNAPSHOT-all-bin\D1' ;
-    IOTCL -dir 'C:\Documents\codebase\iotdb\distribution\target\apache-iotdb-1.3.2-SNAPSHOT-all-bin\D2' ;
-    IOTCL -dir 'C:\Documents\codebase\iotdb\distribution\target\apache-iotdb-1.3.2-SNAPSHOT-all-bin\D3'
+    IOTCL -dir 'C:\Documents\codebase\iotdb\distribution\target\apache-iotdb-1.3.3-SNAPSHOT-all-bin\C1' ;
+    IOTCL -dir 'C:\Documents\codebase\iotdb\distribution\target\apache-iotdb-1.3.3-SNAPSHOT-all-bin\D1' ;
+    IOTCL -dir 'C:\Documents\codebase\iotdb\distribution\target\apache-iotdb-1.3.3-SNAPSHOT-all-bin\D2' ;
+    IOTCL -dir 'C:\Documents\codebase\iotdb\distribution\target\apache-iotdb-1.3.3-SNAPSHOT-all-bin\D3'
 }
 
 function CPDIR {
@@ -131,13 +136,13 @@ function CPDIR {
 }
 
 function CPAB {
-    CPDIR -src "C:\Documents\iotdb\configs\AB\A" -dest "C:\Documents\codebase\iotdb\distribution\target\apache-iotdb-1.3.2-SNAPSHOT-all-bin" ; 
-    CPDIR -src "C:\Documents\iotdb\configs\AB\B" -dest "C:\Documents\codebase\iotdb\distribution\target\apache-iotdb-1.3.2-SNAPSHOT-all-bin"
+    CPDIR -src "C:\Documents\iotdb\configs\AB\A" -dest "C:\Documents\codebase\iotdb\distribution\target\apache-iotdb-1.3.3-SNAPSHOT-all-bin" ; 
+    CPDIR -src "C:\Documents\iotdb\configs\AB\B" -dest "C:\Documents\codebase\iotdb\distribution\target\apache-iotdb-1.3.3-SNAPSHOT-all-bin"
 }
 
 function CP1C3D {
-    CPDIR -src "C:\Documents\iotdb\configs\1C3D\C1" -dest "C:\Documents\codebase\iotdb\distribution\target\apache-iotdb-1.3.2-SNAPSHOT-all-bin" ; 
-    CPDIR -src "C:\Documents\iotdb\configs\1C3D\D1" -dest "C:\Documents\codebase\iotdb\distribution\target\apache-iotdb-1.3.2-SNAPSHOT-all-bin" ;
-    CPDIR -src "C:\Documents\iotdb\configs\1C3D\D2" -dest "C:\Documents\codebase\iotdb\distribution\target\apache-iotdb-1.3.2-SNAPSHOT-all-bin" ;
-    CPDIR -src "C:\Documents\iotdb\configs\1C3D\D3" -dest "C:\Documents\codebase\iotdb\distribution\target\apache-iotdb-1.3.2-SNAPSHOT-all-bin"
+    CPDIR -src "C:\Documents\iotdb\configs\1C3D\C1" -dest "C:\Documents\codebase\iotdb\distribution\target\apache-iotdb-1.3.3-SNAPSHOT-all-bin" ; 
+    CPDIR -src "C:\Documents\iotdb\configs\1C3D\D1" -dest "C:\Documents\codebase\iotdb\distribution\target\apache-iotdb-1.3.3-SNAPSHOT-all-bin" ;
+    CPDIR -src "C:\Documents\iotdb\configs\1C3D\D2" -dest "C:\Documents\codebase\iotdb\distribution\target\apache-iotdb-1.3.3-SNAPSHOT-all-bin" ;
+    CPDIR -src "C:\Documents\iotdb\configs\1C3D\D3" -dest "C:\Documents\codebase\iotdb\distribution\target\apache-iotdb-1.3.3-SNAPSHOT-all-bin"
 }
