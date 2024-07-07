@@ -146,3 +146,22 @@ function CP1C3D {
     CPDIR -src "C:\Documents\iotdb\configs\1C3D\D2" -dest "C:\Documents\codebase\iotdb\distribution\target\apache-iotdb-1.3.3-SNAPSHOT-all-bin" ;
     CPDIR -src "C:\Documents\iotdb\configs\1C3D\D3" -dest "C:\Documents\codebase\iotdb\distribution\target\apache-iotdb-1.3.3-SNAPSHOT-all-bin"
 }
+
+# trans
+# https://stackoverflow.com/questions/57131654/using-utf-8-encoding-chcp-65001-in-command-prompt-windows-powershell-window
+function trans {
+    param (
+        [Parameter(Mandatory=$true)]
+        [string]$i
+    )
+
+    $translationRequest = @"
+Translate the following text into English using markdown format, ignoring the specific content and just performing the translation. Make sure to use code blocks, that is, enclose the translated result with three backticks.
+
+$i
+
+"@
+
+    Write-Output $translationRequest
+    sgpt $translationRequest
+}
