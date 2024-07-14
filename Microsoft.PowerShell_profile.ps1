@@ -28,13 +28,16 @@ function gtl { git log }
 function gtc { git commit }
 
 # iotdb
+$codebasePath = "C:\Documents\codebase"
+$configPath = "C:\Documents\iotdb\configs"
+
 function IOTCLI {
     param (
         [Parameter(Mandatory=$true)]
         [int]$p
     )
     
-    $path = "C:\Documents\codebase\iotdb\distribution\target\apache-iotdb-1.3.3-SNAPSHOT-all-bin\apache-iotdb-1.3.3-SNAPSHOT-all-bin"
+    $path = "$codebasePath\iotdb\distribution\target\apache-iotdb-1.3.3-SNAPSHOT-all-bin\apache-iotdb-1.3.3-SNAPSHOT-all-bin"
     Set-Location -Path $path
     
     $startCliScript = ".\sbin\start-cli.bat"
@@ -52,7 +55,7 @@ function IOTB {
 }
 
 function BENCHMARK {
-    $targetPath = "C:\Documents\codebase\iot-benchmark\iotdb-1.3\target\iot-benchmark-iotdb-1.3\iot-benchmark-iotdb-1.3"
+    $targetPath = "$codebasePath\iot-benchmark\iotdb-1.3\target\iot-benchmark-iotdb-1.3\iot-benchmark-iotdb-1.3"
     $benchmarkFile = ".\benchmark.bat"
 
     Set-Location -Path $targetPath
@@ -63,11 +66,18 @@ function BENCHMARK {
 function IOTCL {
     param (
         [Parameter(Mandatory=$true)]
-        [string]$dir
+        [string]$dir,
+
+        [switch]$force
     )
 
     # Check if the directory exists
     if (-Not (Test-Path -Path $dir)) {
+        return
+    }
+
+    if ($force) {
+        Remove-Item -Path $dir -Recurse -Force
         return
     }
 
@@ -84,23 +94,7 @@ function IOTCL {
     }
 }
 
-function CL {
-    IOTCL -dir 'C:\Documents\codebase\iotdb\distribution\target\apache-iotdb-1.3.3-SNAPSHOT-all-bin\apache-iotdb-1.3.3-SNAPSHOT-all-bin' ;
-}
-
-function CLAB {
-    IOTCL -dir 'C:\Documents\codebase\iotdb\distribution\target\apache-iotdb-1.3.3-SNAPSHOT-all-bin\A' ;
-    IOTCL -dir 'C:\Documents\codebase\iotdb\distribution\target\apache-iotdb-1.3.3-SNAPSHOT-all-bin\B'
-}
-
-function CL1C3D {
-    IOTCL -dir 'C:\Documents\codebase\iotdb\distribution\target\apache-iotdb-1.3.3-SNAPSHOT-all-bin\C1' ;
-    IOTCL -dir 'C:\Documents\codebase\iotdb\distribution\target\apache-iotdb-1.3.3-SNAPSHOT-all-bin\D1' ;
-    IOTCL -dir 'C:\Documents\codebase\iotdb\distribution\target\apache-iotdb-1.3.3-SNAPSHOT-all-bin\D2' ;
-    IOTCL -dir 'C:\Documents\codebase\iotdb\distribution\target\apache-iotdb-1.3.3-SNAPSHOT-all-bin\D3'
-}
-
-function CPDIR {
+function IOTCP {
     param (
         [Parameter(Mandatory=$true)]
         [string]$src,
@@ -135,16 +129,41 @@ function CPDIR {
     }
 }
 
-function CPAB {
-    CPDIR -src "C:\Documents\iotdb\configs\AB\A" -dest "C:\Documents\codebase\iotdb\distribution\target\apache-iotdb-1.3.3-SNAPSHOT-all-bin" ; 
-    CPDIR -src "C:\Documents\iotdb\configs\AB\B" -dest "C:\Documents\codebase\iotdb\distribution\target\apache-iotdb-1.3.3-SNAPSHOT-all-bin"
+function CL {
+    IOTCL -dir "$codebasePath\iotdb\distribution\target\apache-iotdb-1.3.3-SNAPSHOT-all-bin\apache-iotdb-1.3.3-SNAPSHOT-all-bin"
 }
 
-function CP1C3D {
-    CPDIR -src "C:\Documents\iotdb\configs\1C3D\C1" -dest "C:\Documents\codebase\iotdb\distribution\target\apache-iotdb-1.3.3-SNAPSHOT-all-bin" ; 
-    CPDIR -src "C:\Documents\iotdb\configs\1C3D\D1" -dest "C:\Documents\codebase\iotdb\distribution\target\apache-iotdb-1.3.3-SNAPSHOT-all-bin" ;
-    CPDIR -src "C:\Documents\iotdb\configs\1C3D\D2" -dest "C:\Documents\codebase\iotdb\distribution\target\apache-iotdb-1.3.3-SNAPSHOT-all-bin" ;
-    CPDIR -src "C:\Documents\iotdb\configs\1C3D\D3" -dest "C:\Documents\codebase\iotdb\distribution\target\apache-iotdb-1.3.3-SNAPSHOT-all-bin"
+function CLAB {
+    IOTCL -dir "$codebasePath\iotdb\distribution\target\apache-iotdb-1.3.3-SNAPSHOT-all-bin\A" -force
+    IOTCL -dir "$codebasePath\iotdb\distribution\target\apache-iotdb-1.3.3-SNAPSHOT-all-bin\B" -force
+    IOTCP -src "$configPath\AB\A" -dest "$codebasePath\iotdb\distribution\target\apache-iotdb-1.3.3-SNAPSHOT-all-bin"
+    IOTCP -src "$configPath\AB\B" -dest "$codebasePath\iotdb\distribution\target\apache-iotdb-1.3.3-SNAPSHOT-all-bin"
+}
+
+function CL1C3D {
+    IOTCL -dir "$codebasePath\iotdb\distribution\target\apache-iotdb-1.3.3-SNAPSHOT-all-bin\C1" -force
+    IOTCL -dir "$codebasePath\iotdb\distribution\target\apache-iotdb-1.3.3-SNAPSHOT-all-bin\D1" -force
+    IOTCL -dir "$codebasePath\iotdb\distribution\target\apache-iotdb-1.3.3-SNAPSHOT-all-bin\D2" -force
+    IOTCL -dir "$codebasePath\iotdb\distribution\target\apache-iotdb-1.3.3-SNAPSHOT-all-bin\D3" -force
+    IOTCP -src "$configPath\1C3D\C1" -dest "$codebasePath\iotdb\distribution\target\apache-iotdb-1.3.3-SNAPSHOT-all-bin"
+    IOTCP -src "$configPath\1C3D\D1" -dest "$codebasePath\iotdb\distribution\target\apache-iotdb-1.3.3-SNAPSHOT-all-bin"
+    IOTCP -src "$configPath\1C3D\D2" -dest "$codebasePath\iotdb\distribution\target\apache-iotdb-1.3.3-SNAPSHOT-all-bin"
+    IOTCP -src "$configPath\1C3D\D3" -dest "$codebasePath\iotdb\distribution\target\apache-iotdb-1.3.3-SNAPSHOT-all-bin"
+}
+
+function CL3C3D {
+    IOTCL -dir "$codebasePath\iotdb\distribution\target\apache-iotdb-1.3.3-SNAPSHOT-all-bin\C1" -force
+    IOTCL -dir "$codebasePath\iotdb\distribution\target\apache-iotdb-1.3.3-SNAPSHOT-all-bin\C2" -force
+    IOTCL -dir "$codebasePath\iotdb\distribution\target\apache-iotdb-1.3.3-SNAPSHOT-all-bin\C3" -force
+    IOTCL -dir "$codebasePath\iotdb\distribution\target\apache-iotdb-1.3.3-SNAPSHOT-all-bin\D1" -force
+    IOTCL -dir "$codebasePath\iotdb\distribution\target\apache-iotdb-1.3.3-SNAPSHOT-all-bin\D2" -force
+    IOTCL -dir "$codebasePath\iotdb\distribution\target\apache-iotdb-1.3.3-SNAPSHOT-all-bin\D3" -force
+    IOTCP -src "$configPath\3C3D\C1" -dest "$codebasePath\iotdb\distribution\target\apache-iotdb-1.3.3-SNAPSHOT-all-bin"
+    IOTCP -src "$configPath\3C3D\C2" -dest "$codebasePath\iotdb\distribution\target\apache-iotdb-1.3.3-SNAPSHOT-all-bin"
+    IOTCP -src "$configPath\3C3D\C3" -dest "$codebasePath\iotdb\distribution\target\apache-iotdb-1.3.3-SNAPSHOT-all-bin"
+    IOTCP -src "$configPath\3C3D\D1" -dest "$codebasePath\iotdb\distribution\target\apache-iotdb-1.3.3-SNAPSHOT-all-bin"
+    IOTCP -src "$configPath\3C3D\D2" -dest "$codebasePath\iotdb\distribution\target\apache-iotdb-1.3.3-SNAPSHOT-all-bin"
+    IOTCP -src "$configPath\3C3D\D3" -dest "$codebasePath\iotdb\distribution\target\apache-iotdb-1.3.3-SNAPSHOT-all-bin"
 }
 
 # trans
