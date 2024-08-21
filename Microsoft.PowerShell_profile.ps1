@@ -19,6 +19,14 @@ Set-PSReadLineOption -PredictionSource History
 # ls color
 Import-Module PSColor
 
+# utf8
+[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+$OutputEncoding = [System.Text.Encoding]::UTF8
+$PSDefaultParameterValues['*:Encoding'] = 'utf8'
+
+# manga-image-translator api key
+$Env:OPENAI_API_KEY = "xxx"
+
 # alias
 function gta { git add . }
 function gts { git status }
@@ -37,7 +45,7 @@ function IOTCLI {
         [int]$p
     )
     
-    $path = "$codebasePath\iotdb\distribution\target\apache-iotdb-1.3.3-SNAPSHOT-all-bin\apache-iotdb-1.3.3-SNAPSHOT-all-bin"
+    $path = "$codebasePath\iotdb\distribution\target\apache-iotdb-1.4.0-SNAPSHOT-all-bin\apache-iotdb-1.4.0-SNAPSHOT-all-bin"
     Set-Location -Path $path
     
     $startCliScript = ".\sbin\start-cli.bat"
@@ -52,6 +60,10 @@ function IOTA {
 
 function IOTB {
     IOTCLI -p 6668
+}
+
+function IOTC {
+    IOTCLI -p 6669
 }
 
 function BENCHMARK {
@@ -130,40 +142,42 @@ function IOTCP {
 }
 
 function CL {
-    IOTCL -dir "$codebasePath\iotdb\distribution\target\apache-iotdb-1.3.3-SNAPSHOT-all-bin\apache-iotdb-1.3.3-SNAPSHOT-all-bin"
+    IOTCL -dir "$codebasePath\iotdb\distribution\target\apache-iotdb-1.4.0-SNAPSHOT-all-bin\apache-iotdb-1.4.0-SNAPSHOT-all-bin"
 }
 
 function CLAB {
-    IOTCL -dir "$codebasePath\iotdb\distribution\target\apache-iotdb-1.3.3-SNAPSHOT-all-bin\A" -force
-    IOTCL -dir "$codebasePath\iotdb\distribution\target\apache-iotdb-1.3.3-SNAPSHOT-all-bin\B" -force
-    IOTCP -src "$configPath\AB\A" -dest "$codebasePath\iotdb\distribution\target\apache-iotdb-1.3.3-SNAPSHOT-all-bin"
-    IOTCP -src "$configPath\AB\B" -dest "$codebasePath\iotdb\distribution\target\apache-iotdb-1.3.3-SNAPSHOT-all-bin"
+    IOTCL -dir "$codebasePath\iotdb\distribution\target\apache-iotdb-1.4.0-SNAPSHOT-all-bin\A" -force
+    IOTCL -dir "$codebasePath\iotdb\distribution\target\apache-iotdb-1.4.0-SNAPSHOT-all-bin\B" -force
+    IOTCL -dir "$codebasePath\iotdb\distribution\target\apache-iotdb-1.4.0-SNAPSHOT-all-bin\C" -force
+    IOTCP -src "$configPath\AB\A" -dest "$codebasePath\iotdb\distribution\target\apache-iotdb-1.4.0-SNAPSHOT-all-bin"
+    IOTCP -src "$configPath\AB\B" -dest "$codebasePath\iotdb\distribution\target\apache-iotdb-1.4.0-SNAPSHOT-all-bin"
+    IOTCP -src "$configPath\AB\C" -dest "$codebasePath\iotdb\distribution\target\apache-iotdb-1.4.0-SNAPSHOT-all-bin"
 }
 
 function CL1C3D {
-    IOTCL -dir "$codebasePath\iotdb\distribution\target\apache-iotdb-1.3.3-SNAPSHOT-all-bin\C1" -force
-    IOTCL -dir "$codebasePath\iotdb\distribution\target\apache-iotdb-1.3.3-SNAPSHOT-all-bin\D1" -force
-    IOTCL -dir "$codebasePath\iotdb\distribution\target\apache-iotdb-1.3.3-SNAPSHOT-all-bin\D2" -force
-    IOTCL -dir "$codebasePath\iotdb\distribution\target\apache-iotdb-1.3.3-SNAPSHOT-all-bin\D3" -force
-    IOTCP -src "$configPath\1C3D\C1" -dest "$codebasePath\iotdb\distribution\target\apache-iotdb-1.3.3-SNAPSHOT-all-bin"
-    IOTCP -src "$configPath\1C3D\D1" -dest "$codebasePath\iotdb\distribution\target\apache-iotdb-1.3.3-SNAPSHOT-all-bin"
-    IOTCP -src "$configPath\1C3D\D2" -dest "$codebasePath\iotdb\distribution\target\apache-iotdb-1.3.3-SNAPSHOT-all-bin"
-    IOTCP -src "$configPath\1C3D\D3" -dest "$codebasePath\iotdb\distribution\target\apache-iotdb-1.3.3-SNAPSHOT-all-bin"
+    IOTCL -dir "$codebasePath\iotdb\distribution\target\apache-iotdb-1.4.0-SNAPSHOT-all-bin\C1" -force
+    IOTCL -dir "$codebasePath\iotdb\distribution\target\apache-iotdb-1.4.0-SNAPSHOT-all-bin\D1" -force
+    IOTCL -dir "$codebasePath\iotdb\distribution\target\apache-iotdb-1.4.0-SNAPSHOT-all-bin\D2" -force
+    IOTCL -dir "$codebasePath\iotdb\distribution\target\apache-iotdb-1.4.0-SNAPSHOT-all-bin\D3" -force
+    IOTCP -src "$configPath\1C3D\C1" -dest "$codebasePath\iotdb\distribution\target\apache-iotdb-1.4.0-SNAPSHOT-all-bin"
+    IOTCP -src "$configPath\1C3D\D1" -dest "$codebasePath\iotdb\distribution\target\apache-iotdb-1.4.0-SNAPSHOT-all-bin"
+    IOTCP -src "$configPath\1C3D\D2" -dest "$codebasePath\iotdb\distribution\target\apache-iotdb-1.4.0-SNAPSHOT-all-bin"
+    IOTCP -src "$configPath\1C3D\D3" -dest "$codebasePath\iotdb\distribution\target\apache-iotdb-1.4.0-SNAPSHOT-all-bin"
 }
 
 function CL3C3D {
-    IOTCL -dir "$codebasePath\iotdb\distribution\target\apache-iotdb-1.3.3-SNAPSHOT-all-bin\C1" -force
-    IOTCL -dir "$codebasePath\iotdb\distribution\target\apache-iotdb-1.3.3-SNAPSHOT-all-bin\C2" -force
-    IOTCL -dir "$codebasePath\iotdb\distribution\target\apache-iotdb-1.3.3-SNAPSHOT-all-bin\C3" -force
-    IOTCL -dir "$codebasePath\iotdb\distribution\target\apache-iotdb-1.3.3-SNAPSHOT-all-bin\D1" -force
-    IOTCL -dir "$codebasePath\iotdb\distribution\target\apache-iotdb-1.3.3-SNAPSHOT-all-bin\D2" -force
-    IOTCL -dir "$codebasePath\iotdb\distribution\target\apache-iotdb-1.3.3-SNAPSHOT-all-bin\D3" -force
-    IOTCP -src "$configPath\3C3D\C1" -dest "$codebasePath\iotdb\distribution\target\apache-iotdb-1.3.3-SNAPSHOT-all-bin"
-    IOTCP -src "$configPath\3C3D\C2" -dest "$codebasePath\iotdb\distribution\target\apache-iotdb-1.3.3-SNAPSHOT-all-bin"
-    IOTCP -src "$configPath\3C3D\C3" -dest "$codebasePath\iotdb\distribution\target\apache-iotdb-1.3.3-SNAPSHOT-all-bin"
-    IOTCP -src "$configPath\3C3D\D1" -dest "$codebasePath\iotdb\distribution\target\apache-iotdb-1.3.3-SNAPSHOT-all-bin"
-    IOTCP -src "$configPath\3C3D\D2" -dest "$codebasePath\iotdb\distribution\target\apache-iotdb-1.3.3-SNAPSHOT-all-bin"
-    IOTCP -src "$configPath\3C3D\D3" -dest "$codebasePath\iotdb\distribution\target\apache-iotdb-1.3.3-SNAPSHOT-all-bin"
+    IOTCL -dir "$codebasePath\iotdb\distribution\target\apache-iotdb-1.4.0-SNAPSHOT-all-bin\C1" -force
+    IOTCL -dir "$codebasePath\iotdb\distribution\target\apache-iotdb-1.4.0-SNAPSHOT-all-bin\C2" -force
+    IOTCL -dir "$codebasePath\iotdb\distribution\target\apache-iotdb-1.4.0-SNAPSHOT-all-bin\C3" -force
+    IOTCL -dir "$codebasePath\iotdb\distribution\target\apache-iotdb-1.4.0-SNAPSHOT-all-bin\D1" -force
+    IOTCL -dir "$codebasePath\iotdb\distribution\target\apache-iotdb-1.4.0-SNAPSHOT-all-bin\D2" -force
+    IOTCL -dir "$codebasePath\iotdb\distribution\target\apache-iotdb-1.4.0-SNAPSHOT-all-bin\D3" -force
+    IOTCP -src "$configPath\3C3D\C1" -dest "$codebasePath\iotdb\distribution\target\apache-iotdb-1.4.0-SNAPSHOT-all-bin"
+    IOTCP -src "$configPath\3C3D\C2" -dest "$codebasePath\iotdb\distribution\target\apache-iotdb-1.4.0-SNAPSHOT-all-bin"
+    IOTCP -src "$configPath\3C3D\C3" -dest "$codebasePath\iotdb\distribution\target\apache-iotdb-1.4.0-SNAPSHOT-all-bin"
+    IOTCP -src "$configPath\3C3D\D1" -dest "$codebasePath\iotdb\distribution\target\apache-iotdb-1.4.0-SNAPSHOT-all-bin"
+    IOTCP -src "$configPath\3C3D\D2" -dest "$codebasePath\iotdb\distribution\target\apache-iotdb-1.4.0-SNAPSHOT-all-bin"
+    IOTCP -src "$configPath\3C3D\D3" -dest "$codebasePath\iotdb\distribution\target\apache-iotdb-1.4.0-SNAPSHOT-all-bin"
 }
 
 # trans
@@ -175,12 +189,14 @@ function trans {
     )
 
     $translationRequest = @"
-Translate the following text into English using markdown format, ignoring the specific content and just performing the translation. Make sure to use code blocks, that is, enclose the translated result with three backticks.
-
+Translate the following text into English using markdown format, ignoring the specific content and just performing the translation. Make sure to use code blocks, that is, enclose the translated result with three backticks. Only output the translated content.
 $i
 
 "@
 
     Write-Output $translationRequest
     sgpt $translationRequest
+    # Write-Output $translationRequest | ollama run llama3
+    # Write-Output $translationRequest | ollama run qwen2
+    Write-Output $translationRequest | ollama run gemma
 }
