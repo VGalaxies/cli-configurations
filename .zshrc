@@ -146,11 +146,12 @@ alias wget="wget -c"
 alias df='df -h'
 
 # software managment
-alias install='sudo apt install'
+alias install='sudo pacman -S'
+alias remove='sudo pacman -R'
 
 # IOTDB
 # IoTDB 相关路径
-IOTDB_DIR='/home/vgalaxies/Desktop/iotdb/distribution/target/apache-iotdb-1.3.3-SNAPSHOT-all-bin/apache-iotdb-1.3.3-SNAPSHOT-all-bin'
+IOTDB_DIR='/home/vgalaxies/Desktop/iotdb/distribution/target/apache-iotdb-2.0.0-SNAPSHOT-all-bin/apache-iotdb-2.0.0-SNAPSHOT-all-bin'
 
 # IoT Benchmark 相关路径
 IOT_BENCHMARK_DIR='/home/vgalaxies/Desktop/iot-benchmark/iotdb-1.3/target/iot-benchmark-iotdb-1.3/iot-benchmark-iotdb-1.3'
@@ -169,6 +170,7 @@ IOT_CLI() {
 # IoT CLI 别名
 alias IOTA='IOT_CLI 6667'
 alias IOTB='IOT_CLI 6668'
+alias IOTC='IOT_CLI 6669'
 
 # IoT Benchmark 启动函数
 IOT_BENCHMARK() {
@@ -180,14 +182,15 @@ CP_AB() {
     CL_AB && pushd "$IOTDB_DIR"/.. && rm -rf A B C && pushd /home/vgalaxies/Documents/iotdb/configs/AB && cp -r A B C "$IOTDB_DIR"/.. && popd && popd
 }
 
-# 删除 IoTDB 目录中的 A、B、C，并复制新的 A、B、C
+# 删除 IoTDB 目录中的 A、B、C
 CL_AB() {
     pushd "$IOTDB_DIR"/.. && rm -rf A B C && popd
 }
 
 # HG
-HG_PD_DIR='/home/vgalaxies/Desktop/incubator-hugegraph/hugegraph-pd/dist/hugegraph-pd-1.5.0.1'
-HG_STORE_DIR='/home/vgalaxies/Desktop/incubator-hugegraph/hugegraph-store/dist/hugegraph-store-1.5.0.1'
+HG_PD_DIR='/home/vgalaxies/Desktop/incubator-hugegraph/hugegraph-pd/apache-hugegraph-pd-incubating-1.5.0'
+HG_STORE_DIR='/home/vgalaxies/Desktop/incubator-hugegraph/hugegraph-store/apache-hugegraph-store-incubating-1.5.0'
+HG_SERVER_DIR='/home/vgalaxies/Desktop/incubator-hugegraph/hugegraph-server/apache-hugegraph-server-incubating-1.5.0'
 
 CL_PD() {
     pushd "$HG_PD_DIR" && rm -rf logs pd_data && popd
@@ -197,6 +200,10 @@ CL_STORE() {
     pushd "$HG_STORE_DIR" && rm -rf logs storage && popd
 }
 
+CL_SERVER() {
+    pushd "$HG_SERVER_DIR" && rm -rf logs rocksdb-data && popd
+}
+
 CL_HG() {
-    CL_PD && CL_STORE
+    CL_PD && CL_STORE && CL_SERVER
 }
