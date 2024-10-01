@@ -207,3 +207,11 @@ CL_SERVER() {
 CL_HG() {
     CL_PD && CL_STORE && CL_SERVER
 }
+
+# sgpt
+trans() {
+  local input="$1"
+  sgpt "Translate the following text into English using markdown format, ignoring the specific content and just performing the translation. Make sure to use code blocks, that is, enclose the translated result with three backticks.
+
+${input}"
+}
